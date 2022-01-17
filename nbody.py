@@ -87,10 +87,16 @@ def animate(bodies,time_step,total_time,boundaries:tuple):
             positionsx[i].append(frame[i].x)
             positionsy[i].append(frame[i].y)
             animPlot[i].set_data(positionsx[i],positionsy[i])
+
+        flt_px = np.array(positionsx).reshape(-1)
+        flt_py = np.array(positionsy).reshape(-1)
+
+        ax.set_xlim(min(flt_px),max(flt_px))
+        ax.set_ylim(min(flt_py),max(flt_py))
         return animPlot,
 
     new_positions = [[b.changePosition(bodies,time_step,i) for i,b in enumerate(bodies)] for t in range(total_time)]
 
-    ani = FuncAnimation(fig, update, frames=new_positions,init_func=init)
+    ani = FuncAnimation(fig, update, frames=new_positions,init_func=init,interval=50)
 
     plt.show()
